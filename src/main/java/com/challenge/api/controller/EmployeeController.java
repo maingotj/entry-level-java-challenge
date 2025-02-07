@@ -1,6 +1,7 @@
 package com.challenge.api.controller;
 
 import com.challenge.api.model.Employee;
+import com.challenge.api.model.EmployeeImp;
 import com.challenge.api.service.EmployeeService;
 import java.util.List;
 import java.util.UUID;
@@ -26,7 +27,7 @@ public class EmployeeController {
 
     // get request for all employess unfiltered
     @GetMapping
-    public List<Employee> getAllEmployees() {
+    public List<EmployeeImp> getAllEmployees() {
         return service.getAllEmployees();
     }
 
@@ -37,7 +38,7 @@ public class EmployeeController {
      */
     // get request based on uuid
     @GetMapping("/{uuid}")
-    public Employee getEmployeeByUuid(@PathVariable UUID uuid) {
+    public EmployeeImp getEmployeeByUuid(@PathVariable UUID uuid) {
         return service.getEmployeeByUuid(uuid);
     }
 
@@ -49,7 +50,5 @@ public class EmployeeController {
 
     // post request for creating a new employee
     @PostMapping
-    public Employee createEmployee(@RequestBody Employee requestBody) {
-        return service.createEmployee(requestBody);
-    }
+    public EmployeeImp createEmployee(@RequestBody EmployeeImp requestBody) { return service.createEmployee(requestBody);}
 }
