@@ -1,6 +1,8 @@
 package com.challenge.api.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -8,6 +10,7 @@ import java.util.UUID;
 public class EmployeeImp implements Employee {
 
     @Id
+    @GeneratedValue
     private UUID uuid; // the key
 
     private String firstName;
@@ -22,7 +25,6 @@ public class EmployeeImp implements Employee {
 
     //    constructor for employee creation
     public EmployeeImp(
-            UUID uuid,
             String firstName,
             String lastName,
             String fullName,
@@ -32,7 +34,7 @@ public class EmployeeImp implements Employee {
             String email,
             Instant contractHireDate,
             Instant contractTerminationDate) {
-        this.uuid = uuid;
+        this.uuid = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;
         this.fullName = fullName;
@@ -51,7 +53,7 @@ public class EmployeeImp implements Employee {
         return uuid; // Return actual UUID field
     }
 
-    @Override
+    @Override // left as set uuid
     public void setUuid(UUID uuid) {
         this.uuid = uuid; // Set UUID field
     }

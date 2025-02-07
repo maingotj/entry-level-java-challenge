@@ -1,6 +1,5 @@
 package com.challenge.api.controller;
 
-import com.challenge.api.model.Employee;
 import com.challenge.api.model.EmployeeImp;
 import com.challenge.api.service.EmployeeService;
 import java.util.List;
@@ -50,5 +49,7 @@ public class EmployeeController {
 
     // post request for creating a new employee
     @PostMapping
-    public EmployeeImp createEmployee(@RequestBody EmployeeImp requestBody) { return service.createEmployee(requestBody);}
+    public EmployeeImp createEmployee(@RequestBody EmployeeImp requestBody) {
+        return service.createEmployee(requestBody);
+    }
 }

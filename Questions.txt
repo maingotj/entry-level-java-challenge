@@ -1,2 +1,0 @@
-1. For the UUID I'm assuming you would prefer if i generate a random one for each new employee but I wasn't sure if you wanted it to be a custom
-2. Should Full name just be first name + last or does it include something like a middle name
