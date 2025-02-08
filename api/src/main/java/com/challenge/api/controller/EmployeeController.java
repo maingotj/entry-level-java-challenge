@@ -1,9 +1,14 @@
 package com.challenge.api.controller;
 
-import com.challenge.api.model.EmployeeImp;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
+import com.challenge.api.model.EmployeeImpl;
 import com.challenge.api.service.EmployeeService;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -26,8 +31,19 @@ public class EmployeeController {
 
     // get request for all employess unfiltered
     @GetMapping
-    public List<EmployeeImp> getAllEmployees() {
-        return service.getAllEmployees();
+    public CollectionModel<EntityModel<EmployeeImpl>> getAllEmployees() {
+        List<EntityModel<EmployeeImpl>> employees = service.getAllEmployees().stream()
+                .map(employee -> EntityModel.of(
+                        employee,
+                        linkTo(methodOn(EmployeeController.class).getEmployeeByUuid(employee.getUuid()))
+                                .withSelfRel(),
+                        linkTo(methodOn(EmployeeController.class).getAllEmployees())
+                                .withRel("all-employees")))
+                .collect(Collectors.toList());
+
+        return CollectionModel.of(
+                employees,
+                linkTo(methodOn(EmployeeController.class).getAllEmployees()).withSelfRel());
     }
 
     /**
@@ -37,8 +53,14 @@ public class EmployeeController {
      */
     // get request based on uuid
     @GetMapping("/{uuid}")
-    public EmployeeImp getEmployeeByUuid(@PathVariable UUID uuid) {
-        return service.getEmployeeByUuid(uuid);
+    public EntityModel<EmployeeImpl> getEmployeeByUuid(@PathVariable UUID uuid) {
+        EmployeeImpl employee = service.getEmployeeByUuid(uuid);
+
+        return EntityModel.of(
+                employee,
+                linkTo(methodOn(EmployeeController.class).getEmployeeByUuid(uuid))
+                        .withSelfRel(),
+                linkTo(methodOn(EmployeeController.class).getAllEmployees()).withRel("all-employees"));
     }
 
     /**
@@ -49,7 +71,13 @@ public class EmployeeController {
 
     // post request for creating a new employee
     @PostMapping
-    public EmployeeImp createEmployee(@RequestBody EmployeeImp requestBody) {
-        return service.createEmployee(requestBody);
+    public EntityModel<EmployeeImpl> createEmployee(@RequestBody EmployeeImpl requestBody) {
+        EmployeeImpl createdEmployee = service.createEmployee(requestBody);
+
+        return EntityModel.of(
+                createdEmployee,
+                linkTo(methodOn(EmployeeController.class).getEmployeeByUuid(createdEmployee.getUuid()))
+                        .withSelfRel(),
+                linkTo(methodOn(EmployeeController.class).getAllEmployees()).withRel("all-employees"));
     }
 }

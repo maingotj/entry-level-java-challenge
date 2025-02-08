@@ -7,7 +7,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-public class EmployeeImp implements Employee {
+public class EmployeeImpl implements Employee {
 
     @Id
     @GeneratedValue
@@ -24,7 +24,7 @@ public class EmployeeImp implements Employee {
     private Instant contractTerminationDate = null; // defaults to null until termination
 
     //    constructor for employee creation
-    public EmployeeImp(
+    public EmployeeImpl(
             String firstName,
             String lastName,
             String fullName,
@@ -46,7 +46,7 @@ public class EmployeeImp implements Employee {
         this.contractTerminationDate = contractTerminationDate;
     }
 
-    public EmployeeImp() {}
+    public EmployeeImpl() {}
 
     @Override
     public UUID getUuid() {
@@ -55,7 +55,7 @@ public class EmployeeImp implements Employee {
 
     @Override // left as set uuid
     public void setUuid(UUID uuid) {
-        this.uuid = uuid; // Set UUID field
+        this.uuid = uuid; // Set UUID field and allows custom UUID
     }
 
     @Override

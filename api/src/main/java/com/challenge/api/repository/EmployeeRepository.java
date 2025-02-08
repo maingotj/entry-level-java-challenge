@@ -1,8 +1,8 @@
 package com.challenge.api.repository;
 
-import com.challenge.api.model.EmployeeImp;
+import com.challenge.api.model.EmployeeImpl;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface EmployeeRepository extends JpaRepository<EmployeeImp, UUID> { // key value repository for employees
+public interface EmployeeRepository extends JpaRepository<EmployeeImpl, UUID> { // key value repository for employees
 }
